@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Erubis::RubyEvaluator::LogstashConf
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (L)</a> &raquo;
+    <span class='title'>Erubis</span> &raquo; <span class='title'>RubyEvaluator</span>
+     &raquo; 
+    <span class="title">LogstashConf</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="cookbooks_list_link"
+        href="../../cookbooks_list.html">
+      Cookbook List
+    </a>
+  
+    <a class="full_list_link" id="recipes_list_link"
+        href="../../recipes_list.html">
+      Recipe List
+    </a>
+  
+    <a class="full_list_link" id="resources_list_link"
+        href="../../resources_list.html">
+      Resource List
+    </a>
+  
+    <a class="full_list_link" id="definitions_list_link"
+        href="../../definitions_list.html">
+      Definitions List
+    </a>
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Libraries List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Erubis::RubyEvaluator::LogstashConf
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Erubis::RubyEvaluator::LogstashConf</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">libraries/logstash_conf.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#section_to_str-class_method" title="section_to_str (class method)">+ (Object) <strong>section_to_str</strong>(section, version = nil, patterns_dir = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Helper to generate the logstash configuration file.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="section_to_str-class_method">
+  
+    + (<tt>Object</tt>) <strong>section_to_str</strong>(section, version = nil, patterns_dir = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Helper to generate the logstash configuration file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'libraries/logstash_conf.rb', line 52</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_section_to_str'>section_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_section'>section</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_patterns_dir_plugins'>patterns_dir_plugins</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>grok</span><span class='tstring_end'>'</span></span> <span class='rbracket'>]</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_patterns_dir_plugins'>patterns_dir_plugins</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>multiline</span><span class='tstring_end'>'</span></span> <span class='kw'>if</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span> <span class='op'>&gt;=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>1.1.2</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_section'>section</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_output'>output</span><span class='op'>|</span>
+    <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
+      <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>  </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> {</span><span class='tstring_end'>'</span></span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_patterns_dir_plugins'>patterns_dir_plugins</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>not</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='kw'>not</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns_dir</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>    </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_key_value_to_str'>key_value_to_str</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns_dir</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+        <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>    </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_key_value_to_str'>key_value_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>  }</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Thu May 30 15:47:31 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

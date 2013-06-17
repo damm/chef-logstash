@@ -1,3 +1,6 @@
+# 
+# Cookbook Name:: logstash
+#
 
 require 'rubygems'
 
@@ -5,6 +8,7 @@ class Erubis::RubyEvaluator::LogstashConf
 
   private
 
+  # Helper to always ensure the key is a string
   def self.key_to_str(k)
     case k.class.to_s
     when "String"
@@ -17,6 +21,7 @@ class Erubis::RubyEvaluator::LogstashConf
     return k
   end
 
+  # Helper to ensure the value is always a string
   def self.value_to_str(v)
     case v.class.to_s
     when "String", "Symbol", "Fixnum", "Float"
@@ -32,9 +37,10 @@ class Erubis::RubyEvaluator::LogstashConf
     end
   end
 
+  # Convert a `key`, `value` to `key` => `value`
   def self.key_value_to_str(k, v)
     unless v.nil?
-      key_to_str(k) + " => " + value_to_str(v)
+      "#{k} => " + value_to_str(v)
     else
       key_to_str(k)
     end
@@ -42,6 +48,7 @@ class Erubis::RubyEvaluator::LogstashConf
 
   public
   
+  # Helper to generate the logstash configuration file
   def self.section_to_str(section, version=nil, patterns_dir=nil)
     result = []
     patterns_dir_plugins = [ 'grok' ]

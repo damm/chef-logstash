@@ -1,0 +1,1967 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Cookbook: logstash
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (l)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../chef.html" title="chef (chef)">chef</a></span></span>
+     &raquo; 
+    <span class="title">logstash</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="cookbooks_list_link"
+        href="../cookbooks_list.html">
+      Cookbook List
+    </a>
+  
+    <a class="full_list_link" id="recipes_list_link"
+        href="../recipes_list.html">
+      Recipe List
+    </a>
+  
+    <a class="full_list_link" id="resources_list_link"
+        href="../resources_list.html">
+      Resource List
+    </a>
+  
+    <a class="full_list_link" id="definitions_list_link"
+        href="../definitions_list.html">
+      Definitions List
+    </a>
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Libraries List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content">
+
+<div id="filecontents">
+  <h1>Cookbook : logstash</h1>
+  
+
+<h1>Description</h1>
+
+<p>This is an fork of the semi-official &#39;all-in-one&#39; Cookbook.  It has been reduced to a simple installation method and a resource and provider to configure Logstash.</p>
+
+<h2>Requirements</h2>
+
+<p>Review the Berksfile, currently this cookbook is not exportable as is.</p>
+
+<h2>Attributes</h2>
+
+<blockquote>
+<p>Note only the attributes used are listed below.</p>
+</blockquote>
+
+<h2>logstash::default</h2>
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['basedir']</tt></td>
+    <td>String</td>
+    <td>Base Directory where logstash is installed</td>
+    <td><tt>/opt/logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['user']</tt></td>
+    <td>String</td>
+    <td>Username to run logstash as</td>
+    <td><tt>logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['group']</tt></td>
+    <td>String</td>
+    <td>Group Name to run logstash as</td>
+    <td><tt>logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['join_groups']</tt></td>
+    <td>Array</td>
+    <td>An array of Operative System groups to join. Usefull to gain read privileges on some logfiles.</td>
+    <td><tt><code>[]</code></tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['create_account']</tt></td>
+    <td>[TrueClass, FalseClass]</td>
+    <td>Create account, info from `user` and `group` is used.</td>
+    <td><tt>true</tt></td>
+  </tr>
+</table>
+
+<h2>logstash::server</h2>
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['install_method']</tt></td>
+    <td>String</td>
+    <td>How to install logstash? either <code>source</code> or <code>jar</code></td>
+    <td><tt>jar</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['version']</tt></td>
+    <td>String</td>
+    <td>The version of Logstash to install.  Only applies to <code>jar</code> installation method.</td>
+    <td><tt>1.1.12</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['source_url']</tt></td>
+    <td>String</td>   
+    <td>The URL of the Logstash jar to download.</td>
+    <td><tt>https://logstash.objects.dreamhost.com/release/logstash-1.1.12-flatjar.jar</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['checksum']</tt></td>
+    <td>String</td>
+    <td>The checksum of the jar file.  Only applies to the <strong>jar</strong> install method.</td>
+    <td><tt>e75bce7c88461116fbd2c7c473d8c8999c152ab6c618caa58b3d0d88feeb77fd</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['xmx']</tt></td>
+    <td>String</td>
+    <td>The maximum memory to assign to the JVM.</td>
+    <td><tt>1024M</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['java_opts']</tt></td>
+    <td>String</td>
+    <td>Additional params you want to pass to the JVM</td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['gc_opts']</tt></td>
+    <td>String</td>
+    <td>Specify your garbage collection options to pass to the JVM</td>
+    <td><tt><code>-XX:+UseParallelOldGC</code></tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['ipv4_only']</tt></td>
+    <td>[TrueClass, FalseClass]</td>
+    <td>Prefer the IPv4 stack?</td>
+    <td><tt><code>false</code></tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['server']['debug']</tt></td>
+    <td>[TrueClass, FalseClass]</td>
+    <td>Run logstash with <strong>-v</strong> option?</td>
+    <td><tt><code>false</code></tt></td>
+  </tr>
+</table>
+
+<h2>logstash::source</h2>
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['logstash'][['source']['repo']</tt></td>
+    <td>String</td>
+    <td>The git repo to use for the logstash source code of Logstash</td>
+    <td><tt>git://github.com/logstash/logstash.git</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['source']['sha']</tt></td>
+    <td>String</td>
+    <td>The sha/branch/tag of the repo  you wish to clone. Uses <code>node['logstash']['server']['version']</code> by default.</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['source']['java_home']</tt></td>
+    <td>String</td>
+    <td>your <code>JAVA_HOME</code> location. Needed explicity for <code>ant</code> when building JRuby</td>
+    <td><tt>/usr/lib/jvm/java-6-openjdk/</tt></td>
+  </tr>
+</table>
+
+<h2>logstash::index_cleaner</h2>
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['index_cleaner']['days_to_keep']</tt></td>
+    <td>Fixnum</td>
+    <td>number of days from today of Logstash index to keep.</td>
+    <td><tt>31</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['index_cleaner']['cron']['minute']</tt></td>
+    <td>String</td>
+    <td>Minute to run the index_clleaner cron job</td>
+    <td><tt>0</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['index_cleaner']['hour']</tt></td>
+    <td>String</td>
+    <td>Hour to run the index_cleaner cron job</td>
+    <td><tt><code>*</code></tt></td>
+  </tr>
+  <tr>
+    <td><tt>['logstash']['index_cleaner']['cron']['log_file']</tt></td>
+    <td>String</td>
+    <td>Path to direct the index_Cleaners cron job's stdout and stderr to</td>
+    <td><tt><code>/dev/null</code></tt></td>
+  </tr>
+</table>
+
+<h1>Resources and Providers</h1>
+
+<p>This cookbook provides an resource and an corresponding provider.</p>
+
+<h2><code>indexer.rb</code></h2>
+
+<p>Actions:</p>
+
+<ul>
+<li><code>create</code> - create a logstash indexer</li>
+</ul>
+
+<p>Attribute Parameters:</p>
+
+<h2>logstash::indexer</h2>
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>basedir</tt></td>
+    <td>String</td>
+    <td>Base path of where to install logstash to</td>
+    <td><tt>/opt/logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>user</tt></td>
+    <td>String</td>
+    <td>Default username logstash runs as</td>
+    <td><tt>logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>group</tt></td>
+    <td>String</td>
+    <td>Group that the logstash user belongs to</td>
+    <td><tt>logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>log_dir</tt></td>
+    <td>String</td>
+    <td>Log directory to store logstash console logs</td>
+    <td><tt>/var/log/logstash</tt></td>
+    </tr>
+  <tr>
+    <td><tt>pid_dir</tt></td>
+    <td>String</td>
+    <td>/var/run/logstash</td>
+    <td><tt>/var/run/logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>patterns_dir</tt></td>
+    <td>String</td>
+    <td>Directory where to store the pattern files at</td>
+    <td><tt><code>new_resource.basedir + </code>"server/etc/patterns"</tt></td>
+  </tr>
+  <tr>
+    <td><tt>base_config</tt></td>
+    <td>String</td>
+    <td>The name of the template to use for generating server configuration files</td>
+    <td><tt>server.conf.erb</tt></td>
+  </tr>
+  <tr>
+    <td><tt>base_config_cookbook</tt></td>
+    <td>String</td>
+    <td>Specifies where to find the template to use for the template specified in <code>base_config</code></td>
+    <td><tt>logstash</tt></td>
+  </tr>
+  <tr>
+    <td><tt>xms</tt></td>
+    <td>String</td>
+    <td>The minimum memory to assign the JVM.</td>
+    <td><tt>1024M</tt></td>
+  </tr>
+  <tr>
+    <td><tt>xmx</tt></td>
+    <td>String</td>
+    <td>The maximum memory to assign the JVM.</td>
+    <td><tt>1024M</tt></td>
+  </tr>
+  <tr>
+    <td><tt>java_opts</tt></td>
+    <td>String</td>
+    <td>Additional params you want to pass to the JVM</td>
+    <td><tt>String.new</tt></td>
+  </tr>
+  <tr>
+    <td><tt>gc_opts</tt></td>
+    <td>String</td>
+    <td>Specify your garbage collection options to pass to the JVM</td>
+    <td><tt>-XX:+UseParallelOldGC</tt></td>
+  </tr>
+  <tr>
+    <td><tt>ipv4_only</tt></td>
+    <td>[TrueClass, FalseClass]</td>
+    <td>Add jvm option preferIPv4Stack?</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>filters</tt></td>
+    <td>Array</td>
+    <td>Specifies what filters should be used in the indexer</td>
+  </tr>
+  <tr>
+    <td><tt>inputs</tt></td>
+    <td>Array</td>
+    <td>Specifies what inputs should be used in the indexer</td>
+  </tr>
+  <tr>
+    <td><tt>patterns</tt></td>
+    <td>Array</td>
+    <td>Specifies what grok and multiline filters should be made <strong>available</strong>to the indexer</td>
+  </tr>
+  <tr>
+    <td><tt>output</tt></td>
+    <td>Array</td>
+    <td>Specifies where to output and how</td>
+  </tr>
+</table>
+
+<h2>Usage</h2>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>redis</span><span class='tstring_end'>&quot;</span></span>  
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rabbitmq::default</span><span class='tstring_end'>&quot;</span></span>  
+  <span class='id identifier rubyid_logstash_indexer'>logstash_indexer</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>syslog</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+    <span class='id identifier rubyid_inputs'>inputs</span><span class='lparen'>(</span><span class='lbracket'>[</span>  
+      <span class='symbol'>:redis</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>  
+      <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>redis-int</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:data_type</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>list</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>systemlogs:beaver</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>json_event</span><span class='tstring_end'>&quot;</span></span>  
+      <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='rparen'>)</span>  
+  <span class='id identifier rubyid_patterns'>patterns</span><span class='lparen'>(</span><span class='lbracket'>[</span>  
+      <span class='symbol'>:linuxsyslog</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>  
+      <span class='symbol'>:SYSLOGBASE2</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(?:%{SYSLOGTIMESTAMP:timestamp}|%{TIMESTAMP_ISO8601:timestamp8601}) (?:%{SYSLOGFACILITY} )?%{SYSLOGHOST:logsource} %{SYSLOGPROG}:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:SYSLOGPAMSESSION</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%{SYSLOGBASE} (?=%{GREEDYDATA:message})%{WORD:pam_module}\(%{DATA:pam_caller}\): session %{WORD:pam_session_state} for user %{USERNAME:username}(?: by %{GREEDYDATA:pam_by})?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:CRON_ACTION</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[A-Z ]+</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:CRONLOG</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%{SYSLOGBASE} \(%{USER:user}\) %{CRON_ACTION:action} \(%{DATA:message}\)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:SYSLOGLINE</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%{SYSLOGBASE2} %{GREEDYDATA:message}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='comment'># IETF 5424 syslog(8) format (see http://www.rfc-editor.org/info/rfc5424)  
+</span>      <span class='symbol'>:SYSLOG5424PRI</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(?:\&lt;%{NONNEGINT}\&gt;)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:SYSLOG5424SD</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(?:\[%{DATA}\]+|-)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:SYSLOG5424LINE</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%{SYSLOG5424PRI:syslog5424_pri}%{NONNEGINT:syslog5424_ver} (%{TIMESTAMP_ISO8601:syslog5424_ts}|-) (%{HOSTNAME:syslog5424_host}|-) (%{WORD:syslog5424_app}|-) (%{WORD:syslog5424_proc}|-) (%{WORD:syslog5424_msgid}|-) %{SYSLOG5424SD:syslog5424_sd} %{GREEDYDATA:syslog5424_msg}</span><span class='tstring_end'>&quot;</span></span>  
+      <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='rparen'>)</span>  
+  <span class='id identifier rubyid_filters'>filters</span><span class='lparen'>(</span><span class='lbracket'>[</span>  
+      <span class='symbol'>:grok</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>  
+      <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>linuxsyslog</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:pattern</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%{SYSLOGLINE}</span><span class='tstring_end'>&quot;</span></span>  
+      <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='rparen'>)</span>  
+  <span class='id identifier rubyid_output'>output</span><span class='lparen'>(</span><span class='lbracket'>[</span>  
+      <span class='symbol'>:elasticsearch_http</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>  
+      <span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>localhost</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>9200</span><span class='comma'>,</span>  
+      <span class='symbol'>:index</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>systemlogs-%{+YYYY.MM.dd}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+      <span class='symbol'>:flush_size</span> <span class='op'>=&gt;</span> <span class='int'>1</span>  
+      <span class='rbrace'>}</span><span class='comma'>,</span>  
+      <span class='symbol'>:graphite</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>  
+      <span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>localhost</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>   
+      <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>2013</span><span class='comma'>,</span>  
+      <span class='symbol'>:metrics</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash.systemlogs.events</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>  
+      <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='rparen'>)</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>  
+<span class='kw'>end</span>
+</code></pre>
+
+<h2>Source vs. Jar install methods</h2>
+
+<p>Both <code>agent</code> and <code>server</code> support an attribute for how to install. By
+default this is set to <code>jar</code> to use the 1.1.1preview as it is required
+to use elasticsearch 0.19.4. The current release is defined in
+attributes if you choose to go the <code>source</code> route.</p>
+
+<h2>Suggested Usage</h2>
+
+<pre class="code shell"><code>knife cookbook create orgname_logstash
+</code></pre>
+
+<ul>
+<li><p>Ensure this cookbook depends on this logstash cookbook
+<code>ruby depends &quot;logstash&quot;</code></p></li>
+<li><p>Determine how you want to implement your settings, load them in a recipe <em>like in the usage above</em> or load the data in a data bag; and create a recipe to load said data bag to consume and create your logstash instances</p></li>
+</ul>
+
+<blockquote>
+<p>No implementation details are provided for configuring RabbitMQ, Redis or any input methods.  Nor are there any limitations in the configuration</p>
+</blockquote>
+
+<ul>
+<li>Determine how you want to ship logs to logstash?</li>
+</ul>
+
+<blockquote>
+<p>Other cookbooks should provide shippers to logstash.  This cookbook aims only support the logstash server.</p>
+</blockquote>
+
+<h2>License and Author</h2>
+
+<ul>
+<li>Author:    Scott M. Likens</li>
+<li>Author:    John E. Vincent</li>
+<li>Author:    Bryan W. Berry (<a href="mailto:bryan.berry@gmail.com">bryan.berry@gmail.com</a>)</li>
+<li>Author:    Richard Clamp (@richardc)</li>
+<li>Author:    Juanje Ojeda (@juanje)</li>
+<li>Author:    @benattar</li>
+<li>Copyright: 2013, Scott M. Likens</li>
+<li>Copyright: 2012, John E. Vincent</li>
+<li>Copyright: 2012, Bryan W. Berry</li>
+<li>Copyright: 2012, Richard Clamp</li>
+<li>Copyright: 2012, Juanje Ojeda</li>
+<li>Copyright: 2012, @benattar</li>
+</ul>
+
+<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_http'>http</span><span class='symbol'>:/</span><span class='op'>/</span><span class='id identifier rubyid_www'>www</span><span class='period'>.</span><span class='id identifier rubyid_apache'>apache</span><span class='period'>.</span><span class='id identifier rubyid_org'>org</span><span class='op'>/</span><span class='id identifier rubyid_licenses'>licenses</span><span class='op'>/</span><span class='const'>LICENSE</span><span class='op'>-</span><span class='float'>2.0</span>
+</code></pre>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+
+
+
+<h1>Cookbook Documentation</h1>
+
+
+
+
+  <h2>Recipes Summary</h2>
+  <ul class="summary">
+    
+      <li>
+        <span class="summary_signature">
+          <strong><a href="#logstash::server">logstash::server</a></strong>
+        </span>
+        <span class="summary_desc"></span>
+      </li>
+    
+      <li>
+        <span class="summary_signature">
+          <strong><a href="#logstash::source">logstash::source</a></strong>
+        </span>
+        <span class="summary_desc"></span>
+      </li>
+    
+      <li>
+        <span class="summary_signature">
+          <strong><a href="#logstash::default">logstash::default</a></strong>
+        </span>
+        <span class="summary_desc"></span>
+      </li>
+    
+      <li>
+        <span class="summary_signature">
+          <strong><a href="#logstash::haproxy">logstash::haproxy</a></strong>
+        </span>
+        <span class="summary_desc"></span>
+      </li>
+    
+      <li>
+        <span class="summary_signature">
+          <strong><a href="#logstash::index_cleaner">logstash::index_cleaner</a></strong>
+        </span>
+        <span class="summary_desc"></span>
+      </li>
+    
+      <li>
+        <span class="summary_signature">
+          <strong><a href="#logstash::install_server">logstash::install_server</a></strong>
+        </span>
+        <span class="summary_desc"></span>
+      </li>
+    
+  </ul>
+
+
+
+
+  <h2>Lightweight Resources</h2>
+  
+    <h3><a name="Chef::Resource::LogstashIndexer">logstash_indexer</a></h3>
+    <ul>
+
+
+  <h4>Actions</h4>
+  
+  <ul><table>
+    <thead>
+      <th>Action</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      
+        <tr class="r1">
+          <td><strong>create</strong></td>
+          <td>Create an logstash indexer</td>
+        </tr>
+        
+      
+    </tbody>
+  </table></ul>
+
+
+
+
+  <h4>Attributes</h4>
+  <ul>
+
+
+<table>
+  <thead>
+    <th>Attribute</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    
+      <tr class="r1">
+        <td><strong>basedir</strong></td>
+        <td>Base directory where logstash is to be installed</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>user</strong></td>
+        <td>User that logstash runs as</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>group</strong></td>
+        <td>Group that logstash runs under</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>log_dir</strong></td>
+        <td>Where logstash should output it's server output</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>pid_dir</strong></td>
+        <td>Where logstash should store it's pid</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>patterns_dir</strong></td>
+        <td>Relative path to store the pattern files</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>base_config</strong></td>
+        <td>Determines what erb template is used to generate the logstash configuration</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>base_config_cookbook</strong></td>
+        <td>Determines where the erb template can be found</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>xms</strong></td>
+        <td>Minimum memory to assign to the JVM</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>xmx</strong></td>
+        <td>Maximum memory to assign to the JVM</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>java_opts</strong></td>
+        <td>Additional options to pass to the JVM</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>gc_opts</strong></td>
+        <td>Default Gargbage Collection Options</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>ipv4_only</strong></td>
+        <td>Enable ipv4 only stack?</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>filters</strong></td>
+        <td>Logstash filters see http://logstash.net/docs/1.1.13/ for more information on filters plugin</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>inputs</strong></td>
+        <td>Logstash inputs see http://logstash.net/docs/1.1.13/ for more information on inputs plugin</td>
+      </tr>
+      
+    
+      <tr class="r2">
+        <td><strong>patterns</strong></td>
+        <td>Logstash patterns see http://logstash.net/docs/1.1.13/ for more information on patterns plugin</td>
+      </tr>
+      
+    
+      <tr class="r1">
+        <td><strong>output</strong></td>
+        <td>Logstash output see http://logstash.net/docs/1.1.13/ for more information on the output plugin</td>
+      </tr>
+      
+    
+  </tbody>
+</table>
+</ul>
+
+
+
+
+</ul>
+  
+
+
+
+
+  <h2>Providers</h2>
+  
+    <h3><a name="Chef::Provider::LogstashIndexer">logstash_indexer</a></h3>
+    <ul>
+
+
+  <h4>Actions Summary</h4>
+  <ul class="summary">
+    
+      <li>
+        <span class="summary_signature">
+          <strong><a href="#create">create</a></strong>
+        </span>
+        <span class="summary_desc">Creates a logstash indexer</span>
+      </li>
+    
+  </ul>
+
+</ul>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="method_details_list">
+  
+
+
+
+  <h2>Recipe Details</h2>
+  
+    <div class="method_details first">
+      <h3 class="signature"><a name="logstash::server">
+        <strong>logstash::server</strong>
+      </a></h3>
+      
+      
+
+<table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File './recipes/server.rb', line 1</span>
+
+<span class='comment'>#
+</span><span class='comment'># Author:: John E. Vincent
+</span><span class='comment'># Author:: Bryan W. Berry (&lt;bryan.berry@gmail.com&gt;)
+</span><span class='comment'># Author:: Scott M. Likens (&lt;scott@mopub.com&gt;)
+</span><span class='comment'># Copyright 2013, MoPub
+</span><span class='comment'># Copyright 2012, John E. Vincent
+</span><span class='comment'># Copyright 2012, Bryan W. Berry
+</span><span class='comment'># License: Apache 2.0
+</span><span class='comment'># Cookbook Name:: logstash
+</span><span class='comment'># Recipe:: server
+</span><span class='comment'>#
+</span><span class='comment'>#
+</span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash::default</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logrotate</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rabbitmq</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>install_rabbitmq</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+
+<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>install_zeromq</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>yumrepo::zeromq</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_platform_family?'>platform_family?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rhel</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>zeromq_packages</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_package'>package</span> <span class='id identifier rubyid_p'>p</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+
+<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns_dir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span>
+  <span class='id identifier rubyid_patterns_dir'>patterns_dir</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns_dir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>else</span>
+  <span class='id identifier rubyid_patterns_dir'>patterns_dir</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns_dir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='kw'>if</span> <span class='const'>Chef</span><span class='op'>::</span><span class='const'>Config</span><span class='lbracket'>[</span><span class='symbol'>:solo</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_es_server_ip'>es_server_ip</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>elasticsearch_ip</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_graphite_server_ip'>graphite_server_ip</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>graphite_ip</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>else</span>
+  <span class='id identifier rubyid_es_results'>es_results</span> <span class='op'>=</span> <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='symbol'>:node</span><span class='comma'>,</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>elasticsearch_query</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_graphite_results'>graphite_results</span> <span class='op'>=</span> <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='symbol'>:node</span><span class='comma'>,</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>graphite_query</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_es_results'>es_results</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_es_server_ip'>es_server_ip</span> <span class='op'>=</span> <span class='id identifier rubyid_es_results'>es_results</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ipaddress</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_es_server_ip'>es_server_ip</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>elasticsearch_ip</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_graphite_results'>graphite_results</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_graphite_server_ip'>graphite_server_ip</span> <span class='op'>=</span> <span class='id identifier rubyid_graphite_results'>graphite_results</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ipaddress</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_graphite_server_ip'>graphite_server_ip</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>graphite_ip</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='comment'># Create directory for logstash
+</span><span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='qwords_beg'>%w{</span><span class='tstring_content'>bin</span><span class='words_sep'> </span><span class='tstring_content'>etc</span><span class='words_sep'> </span><span class='tstring_content'>lib</span><span class='words_sep'> </span><span class='tstring_content'>log</span><span class='words_sep'> </span><span class='tstring_content'>tmp</span><span class='words_sep'> }</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ldir'>ldir</span><span class='op'>|</span>
+  <span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ldir'>ldir</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='comment'># installation
+</span><span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>install_method</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>jar</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_remote_file'>remote_file</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>version</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>.jar</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_group'>group</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_source'>source</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>source_url</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_checksum'>checksum</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checksum</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create_if_missing</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_link'>link</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash.jar</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_to'>to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>version</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>.jar</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_notifies'>notifies</span> <span class='symbol'>:restart</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>runit_service[logstash_server]</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>else</span>
+  <span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash::source</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_logstash_version'>logstash_version</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>source</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sha</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>v</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>version</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_link'>link</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash.jar</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_to'>to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/source/build/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_logstash_version'>logstash_version</span><span class='rbrace'>}</span><span class='tstring_content'>-monolithic.jar</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_notifies'>notifies</span> <span class='symbol'>:restart</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>runit_service[logstash_server]</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/etc/conf.d</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
+  <span class='id identifier rubyid_template_name'>template_name</span> <span class='op'>=</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='id identifier rubyid_template'>template</span> <span class='id identifier rubyid_template_name'>template_name</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_source'>source</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns.erb</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_variables'>variables</span><span class='lparen'>(</span><span class='symbol'>:patterns</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>0644</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_notifies'>notifies</span> <span class='symbol'>:restart</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>runit_service[logstash_server]</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_template'>template</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/etc/logstash.conf</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_source'>source</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>base_config</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_cookbook'>cookbook</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>base_config_cookbook</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0644</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_variables'>variables</span><span class='lparen'>(</span><span class='symbol'>:graphite_server_ip</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_graphite_server_ip'>graphite_server_ip</span><span class='comma'>,</span>
+            <span class='symbol'>:es_server_ip</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_es_server_ip'>es_server_ip</span><span class='comma'>,</span>
+            <span class='symbol'>:enable_embedded_es</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>enable_embedded_es</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+            <span class='symbol'>:es_cluster</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>elasticsearch_cluster</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+            <span class='symbol'>:patterns_dir</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_notifies'>notifies</span> <span class='symbol'>:restart</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>runit_service[logstash_server]</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_runit_service'>runit_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash_server</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_default_logger'>default_logger</span> <span class='kw'>true</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+            <span class='symbol'>:config_file</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash.conf</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>server</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='symbol'>:max_heap</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>xmx</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+            <span class='symbol'>:min_heap</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>xms</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+          <span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
+
+
+<span class='comment'># if platform_family? &quot;debian&quot;
+</span><span class='comment'>#   if node[&quot;platform_version&quot;] == &quot;12.04&quot;
+</span><span class='comment'>#     template &quot;/etc/init/logstash_server.conf&quot; do
+</span><span class='comment'>#       mode &quot;0644&quot;
+</span><span class='comment'>#       source &quot;logstash_server.conf.erb&quot;
+</span><span class='comment'>#     end
+</span>
+<span class='comment'>#     service &quot;logstash_server&quot; do
+</span><span class='comment'>#       provider Chef::Provider::Service::Upstart
+</span><span class='comment'>#       action [ :enable, :start ]
+</span><span class='comment'>#     end
+</span><span class='comment'>#   else
+</span><span class='comment'>#     runit_service &quot;logstash_server&quot;
+</span><span class='comment'>#   end
+</span><span class='comment'># elsif platform_family? &quot;rhel&quot;,&quot;fedora&quot;
+</span><span class='comment'>#   template &quot;/etc/init.d/logstash_server&quot; do
+</span><span class='comment'>#     source &quot;init.erb&quot;
+</span><span class='comment'>#     owner &quot;root&quot;
+</span><span class='comment'>#     group &quot;root&quot;
+</span><span class='comment'>#     mode &quot;0774&quot;
+</span><span class='comment'>#     variables(:config_file =&gt; &quot;logstash.conf&quot;,
+</span><span class='comment'>#               :name =&gt; 'server',
+</span><span class='comment'>#               :max_heap =&gt; node['logstash']['server']['xmx'],
+</span><span class='comment'>#               :min_heap =&gt; node['logstash']['server']['xms']
+</span><span class='comment'>#               )
+</span><span class='comment'>#   end
+</span>
+<span class='comment'>#   service &quot;logstash_server&quot; do
+</span><span class='comment'>#     supports :restart =&gt; true, :reload =&gt; true, :status =&gt; true
+</span><span class='comment'>#     action [:enable, :start]
+</span><span class='comment'>#   end
+</span><span class='comment'># end
+</span>
+<span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log_dir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_recursive'>recursive</span> <span class='kw'>true</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_logrotate_app'>logrotate_app</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash_server</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log_dir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/*.log</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_frequency'>frequency</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>daily</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_rotate'>rotate</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>30</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_options'>options</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>missingok</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>notifempty</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span>
+  <span class='id identifier rubyid_create'>create</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>664 </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+
+    </div>
+  
+    <div class="method_details ">
+      <h3 class="signature"><a name="logstash::source">
+        <strong>logstash::source</strong>
+      </a></h3>
+      
+      
+
+<table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File './recipes/source.rb', line 1</span>
+
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>build-essential</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>java</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash::default</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_package'>package</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wget</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_logstash_version'>logstash_version</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>source</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sha</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>v</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>version</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/source</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_git'>git</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/source</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_repository'>repository</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>source</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>repo</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_reference'>reference</span> <span class='id identifier rubyid_logstash_version'>logstash_version</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:sync</span>
+  <span class='id identifier rubyid_user'>user</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_execute'>execute</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>build-logstash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_cwd'>cwd</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/source</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_environment'>environment</span> <span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>JAVA_HOME</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>source</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>java_home</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_user'>user</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># This variant is useful for troubleshooting stupid environment problems
+</span>  <span class='comment'># command &quot;make clean &amp;&amp; make VERSION=#{logstash_version} --debug &gt; /tmp/make.log 2&gt;&amp;1&quot;
+</span>  <span class='id identifier rubyid_command'>command</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>make clean &amp;&amp; make VERSION=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_logstash_version'>logstash_version</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:run</span>
+  <span class='id identifier rubyid_creates'>creates</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/source/build/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_logstash_version'>logstash_version</span><span class='rbrace'>}</span><span class='tstring_content'>-monolithic.jar</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_not_if'>not_if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test -f </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/source/build/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_logstash_version'>logstash_version</span><span class='rbrace'>}</span><span class='tstring_content'>-monolithic.jar</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+
+    </div>
+  
+    <div class="method_details ">
+      <h3 class="signature"><a name="logstash::default">
+        <strong>logstash::default</strong>
+      </a></h3>
+      
+      
+
+<table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File './recipes/default.rb', line 1</span>
+
+<span class='comment'>#
+</span><span class='comment'># Cookbook Name:: logstash
+</span><span class='comment'># Recipe:: default
+</span><span class='comment'>#
+</span><span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>runit</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>platform_version</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>12.04</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>java</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>create_account</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_system'>system</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_user'>user</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_home'>home</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/var/lib/logstash</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_system'>system</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+    <span class='id identifier rubyid_manage_home'>manage_home</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_group'>group</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>join_groups</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='op'>|</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_grp'>grp</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_members'>members</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:modify</span>
+    <span class='id identifier rubyid_append'>append</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_only_if'>only_if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>grep -q '^</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_grp'>grp</span><span class='rbrace'>}</span><span class='tstring_content'>:' /etc/group</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+
+    </div>
+  
+    <div class="method_details ">
+      <h3 class="signature"><a name="logstash::haproxy">
+        <strong>logstash::haproxy</strong>
+      </a></h3>
+      
+      
+
+<table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File './recipes/haproxy.rb', line 1</span>
+
+<span class='comment'># this recipe lets output haproxy logs to file as if they were apache
+</span><span class='comment'># virtual logs, in order to interface with legacy traffic measuring
+</span><span class='comment'># applications like AWstats
+</span><span class='comment'># Also requires changes to your haproxy configuration
+</span><span class='comment'># and a file output on your logstash_server
+</span><span class='comment'># I have no idea if it meets anyone's needs other than my own
+</span><span class='comment'># only for those crazy enough to replace apache or Nginx as their
+</span><span class='comment'># main front-end server - Bryan W. Berry 28 June 2012
+</span>
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logrotate</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/apache_logs</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_link'>link</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/var/lib/logstash/apache_logs</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_to'>to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/apache_logs</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/opt/logstash/server/etc/patterns</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0774</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='comment'># create pattern_file  for haproxy
+</span><span class='id identifier rubyid_cookbook_file'>cookbook_file</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/opt/logstash/server/etc/patterns/haproxy</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_source'>source</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>haproxy</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0774</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='comment'># set logrotate  for /opt/logstash/server/apache_logs
+</span><span class='id identifier rubyid_logrotate_app'>logrotate_app</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apache_logs</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logrotate_target</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_frequency'>frequency</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>daily</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_create'>create</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>664 </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_rotate'>rotate</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>30</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+
+    </div>
+  
+    <div class="method_details ">
+      <h3 class="signature"><a name="logstash::index_cleaner">
+        <strong>logstash::index_cleaner</strong>
+      </a></h3>
+      
+      
+
+<table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File './recipes/index_cleaner.rb', line 1</span>
+
+<span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>python::pip</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_base_dir'>base_dir</span>          <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>index_cleaner</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_index_cleaner_bin'>index_cleaner_bin</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_base_dir'>base_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash_index_cleaner.py</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_days_to_keep'>days_to_keep</span>      <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>index_cleaner</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>days_to_keep</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_log_file'>log_file</span>          <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>index_cleaner</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cron</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log_file</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+
+<span class='id identifier rubyid_python_pip'>python_pip</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pyes</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:install</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_base_dir'>base_dir</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_cookbook_file'>cookbook_file</span> <span class='id identifier rubyid_index_cleaner_bin'>index_cleaner_bin</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_source'>source</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash_index_cleaner.py</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0774</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='comment'># FIXME: http://tickets.opscode.com/browse/CHEF-3547
+</span><span class='id identifier rubyid_file'>file</span> <span class='id identifier rubyid_index_cleaner_bin'>index_cleaner_bin</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0744</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:touch</span>
+  <span class='id identifier rubyid_only_if'>only_if</span> <span class='lbrace'>{</span> <span class='const'>Chef</span><span class='op'>::</span><span class='const'>VERSION</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10.16.0</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_cron'>cron</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash_index_cleaner</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_command'>command</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_index_cleaner_bin'>index_cleaner_bin</span><span class='rbrace'>}</span><span class='tstring_content'> -d </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_days_to_keep'>days_to_keep</span><span class='rbrace'>}</span><span class='tstring_content'> &amp;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_log_file'>log_file</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_minute'>minute</span>  <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>index_cleaner</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cron</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>minute</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_hour'>hour</span>    <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>index_cleaner</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>cron</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hour</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+
+    </div>
+  
+    <div class="method_details ">
+      <h3 class="signature"><a name="logstash::install_server">
+        <strong>logstash::install_server</strong>
+      </a></h3>
+      
+      
+
+<table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File './recipes/install_server.rb', line 1</span>
+
+<span class='comment'>#
+</span><span class='comment'># Cookbook Name:: logstash
+</span><span class='comment'># Recipe:: install_server
+</span><span class='comment'>#
+</span>
+<span class='comment'># Logstash depends on java being installed.
+</span><span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>java</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='comment'># Do we need to create a logstash account? if so create it.
+</span><span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>create_account</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_system'>system</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_user'>user</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_home'>home</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/var/lib/logstash</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_system'>system</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+    <span class='id identifier rubyid_manage_home'>manage_home</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>join_groups</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='op'>|</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_grp'>grp</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_members'>members</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:modify</span>
+    <span class='id identifier rubyid_append'>append</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_only_if'>only_if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>grep -q '^</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_grp'>grp</span><span class='rbrace'>}</span><span class='tstring_content'>:' /etc/group</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_group'>group</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log_dir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_recursive'>recursive</span> <span class='kw'>true</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_logrotate_app'>logrotate_app</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash_server</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>log_dir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/*.log</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_frequency'>frequency</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>daily</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_rotate'>rotate</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>30</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_options'>options</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>missingok</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>notifempty</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span>
+  <span class='id identifier rubyid_create'>create</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>664 </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='comment'># Create directory for logstash
+</span><span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='comment'># Let's make sure all the directory's are created before hand.
+</span><span class='qwords_beg'>%w{</span><span class='tstring_content'>bin</span><span class='words_sep'> </span><span class='tstring_content'>etc</span><span class='words_sep'> </span><span class='tstring_content'>lib</span><span class='words_sep'> </span><span class='tstring_content'>log</span><span class='words_sep'> </span><span class='tstring_content'>tmp</span><span class='words_sep'> }</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ldir'>ldir</span><span class='op'>|</span>
+  <span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ldir'>ldir</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='comment'># installation
+</span><span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>install_method</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>jar</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_remote_file'>remote_file</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>version</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>.jar</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_group'>group</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_source'>source</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>source_url</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_checksum'>checksum</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>checksum</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create_if_missing</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_link'>link</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash.jar</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_to'>to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>version</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>.jar</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>else</span>
+  <span class='id identifier rubyid_include_recipe'>include_recipe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash::source</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_logstash_version'>logstash_version</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>source</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sha</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>v</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>version</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_link'>link</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/lib/logstash.jar</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_to'>to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/source/build/logstash-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_logstash_version'>logstash_version</span><span class='rbrace'>}</span><span class='tstring_content'>-monolithic.jar</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>basedir</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/server/etc/conf.d</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>group</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+
+    </div>
+  
+
+
+
+
+  <h2>Action Details</h2>
+  
+    
+    
+      
+        <div class="method_details first">
+          <h3 class="signature"><a name="create">
+            <strong>create</strong>
+            &nbsp;(Chef::Provider::LogstashIndexer)
+          </a></h3>
+          
+<p>Creates a logstash indexer</p>
+
+          
+
+<table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'providers/indexer.rb', line 11</span>
+
+<span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span> <span class='kw'>do</span>
+  <span class='comment'># `patterns_dir` is a relative path; we have to append the basedir to the front of the string.
+</span>  <span class='id identifier rubyid_patterns_dir'>patterns_dir</span> <span class='op'>=</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_basedir'>basedir</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_patterns_dir'>patterns_dir</span>
+  
+  <span class='comment'># Ensure the `patterns_dir` exists
+</span>  <span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0755</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span>
+  <span class='kw'>end</span>
+  <span class='comment'># Each indexer has it's own temporary directory
+</span>  <span class='id identifier rubyid_directory'>directory</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_basedir'>basedir</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/server/tmp/</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='int'>0755</span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Write all the `patterns` to disk
+</span>  <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_patterns'>patterns</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_output'>output</span><span class='op'>|</span>
+    <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
+      <span class='id identifier rubyid_template_name'>template_name</span> <span class='op'>=</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+      <span class='id identifier rubyid_template'>template</span> <span class='id identifier rubyid_template_name'>template_name</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_source'>source</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>patterns.erb</span><span class='tstring_end'>'</span></span>
+        <span class='id identifier rubyid_cookbook'>cookbook</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_base_config_cookbook'>base_config_cookbook</span>
+        <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span>
+        <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span>
+        <span class='id identifier rubyid_variables'>variables</span><span class='lparen'>(</span><span class='symbol'>:patterns</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>0644</span><span class='tstring_end'>'</span></span>
+        <span class='id identifier rubyid_notifies'>notifies</span> <span class='symbol'>:restart</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>runit_service[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Generate the Logstash Configuration file for the Indexer
+</span>  <span class='id identifier rubyid_template'>template</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_basedir'>basedir</span><span class='rbrace'>}</span><span class='tstring_content'>/server/etc/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>.conf</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_source'>source</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_base_config'>base_config</span>
+    <span class='id identifier rubyid_cookbook'>cookbook</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_base_config_cookbook'>base_config_cookbook</span>
+    <span class='id identifier rubyid_owner'>owner</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span>
+    <span class='id identifier rubyid_mode'>mode</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0644</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_variables'>variables</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+                <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+                <span class='symbol'>:filters</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_filters'>filters</span><span class='comma'>,</span>
+                <span class='symbol'>:inputs</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='comma'>,</span>
+                <span class='symbol'>:output</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span><span class='comma'>,</span>
+                <span class='symbol'>:patterns_dir</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_patterns_dir'>patterns_dir</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_notifies'>notifies</span> <span class='symbol'>:restart</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>runit_service[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Start the indexer under runit
+</span>  <span class='id identifier rubyid_runit_service'>runit_service</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_default_logger'>default_logger</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_run_template_name'>run_template_name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>logstash_server</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_cookbook'>cookbook</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_base_config_cookbook'>base_config_cookbook</span>
+    <span class='id identifier rubyid_options'>options</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+              <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+              <span class='symbol'>:max_heap</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>xmx</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+              <span class='symbol'>:min_heap</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>logstash</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>server</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>xms</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+            <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+
+        </div>
+      
+    
+  
+
+
+
+
+
+
+</div>
+
+
+</div>
+</div>
+
+    <div id="footer">
+  Generated on Thu May 30 15:47:31 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

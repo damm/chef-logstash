@@ -1,19 +1,20 @@
 name             "logstash"
-maintainer       "John E. Vincent"
-maintainer_email "lusis.org+github.com@gmail.com"
+maintainer       "Scott M. Likens"
+maintainer_email "scott@mopub.com"
 license          "Apache 2.0"
 description      "Installs/Configures logstash"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.6.1"
+version          "0.7.1"
 
-%w{ ubuntu debian redhat centos scientific amazon fedora }.each do |os|
-  supports os
-end
+supports "ubuntu"
 
-%w{ apache2 php build-essential git rbenv runit python java ant logrotate rabbitmq yumrepo }.each do |ckbk|
-  depends ckbk
-end
-
-%w{ yumrepo apt }.each do |ckbk|
-  recommends ckbk
-end
+depends "build-essential"
+depends "git"
+depends "runit"
+depends "python"
+depends "java"
+depends "logrotate"
+depends "rabbitmq"
+depends "sysctl"
+depends "redis_development"
+depends "apt"
