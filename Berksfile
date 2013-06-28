@@ -1,8 +1,15 @@
 metadata
-cookbook 'yum'
+
+cookbook 'logrotate'
 cookbook 'java'
 cookbook 'build-essential'
-cookbook 'runit'
-cookbook 'minitest-handler', git: 'git://github.com/btm/minitest-handler-cookbook.git'
-cookbook 'elasticsearch', git: 'git://github.com/mopub-cookbooks/elasticsearch.git'
-cookbook "redis_development", git: 'git://github.com/mopub-cookbooks/redis.git'
+cookbook 'runit', '1.1.6'
+
+
+group :integration do
+  cookbook "apt"
+  cookbook "yum"
+  cookbook "logstash_test", path: "test/cookbooks/logstash_test"
+  # Future, when/if minitest support for this cookbook is added
+  cookbook "minitest-handler"
+end

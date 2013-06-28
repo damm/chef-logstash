@@ -1,8 +1,12 @@
-0.7.1 (Juune 16, 2013)
+0.2.1 (June 26, 2012)
 ---------------------
 
 New features
-    * Resource and Privder
+	* Use ruby hashes supplied by roles to populate inputs, filters,
+	and outputs
+	* redhat-family support
+	* change default version of logstash to 1.1.1preview
+	* add in Travis-CI support
 
-Removed Features
-    * All log shippers, and most everything except installation
+Bug fixes
+	* keep apache default site from obscuring kibana

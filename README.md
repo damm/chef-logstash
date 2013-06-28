@@ -6,11 +6,7 @@ This is an fork of the semi-official 'all-in-one' Cookbook.  It has been reduced
 Requirements
 ------------
 
- * Java cookbook from Opscode
- * Runit cookbook From Opscode
- * Elasticsearch cookbook of your choice
-
-> What is tested is in The Berksfile
+Review the Berksfile, currently this cookbook is not exportable as is.
 
 Attributes
 ----------
