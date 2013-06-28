@@ -34,10 +34,10 @@ describe "logstash_test::default" do
     service("logstash_indexer_systemlogs").must_be_running
   end
   it "should wait for logstash to come up" do
-    sleep 65
+    sleep 25
   end
   it "should be able to query elasticsearch" do
-    uri = URI.parse("http://localhost:9200")
+    uri = URI.parse("http://127.0.0.1:9200")
     Net::HTTP.get(uri)
     res = Net::HTTP.get_response(uri)
     return res.is_a?(Net::HTTPSuccess)
@@ -52,11 +52,11 @@ describe "logstash_test::default" do
    #  t2 = t1.connect("127.0.0.1", 514)
     t1.write(ipsum)
   end
-  it "should take a nap" do
-    sleep 10
-  end
-  it "should have data in logstashes index" do
-    server = Stretcher::Server.new('http://localhost:9200')
-    assert server.index(indice).msearch([{query: {match_all: {}}}])
-  end
+  # it "take 60 seconds to process the messages" do
+  #   sleep 60
+  # end
+  # it "should have data in logstashes index" do
+  #   server = Stretcher::Server.new('http://127.0.0.1:9200')
+  #   assert server.index(indice).msearch([{query: {match_all: {}}}])
+  # end
 end
