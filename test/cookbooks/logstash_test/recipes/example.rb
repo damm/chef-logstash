@@ -55,4 +55,3 @@ logstash_indexer "logstash_indexer_" + "systemlogs" do
   action :create
 end
 include_recipe "logstash::install_maxmind"
-chef_gem "stretcher"

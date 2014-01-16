@@ -19,7 +19,6 @@
 require File.expand_path('../support/helpers', __FILE__)
 require 'net/http'
 require 'socket'
-require 'stretcher'
 require 'time'
 now = DateTime.now
 indice = "logstash-#{now.strftime("%Y")}.#{now.strftime("%m")}.#{now.strftime("%d")}"
@@ -44,19 +43,10 @@ describe "logstash_test::default" do
   end
   it "should be able to connect to udp port 514 and send messages" do
     u1 = UDPSocket.new
-   # u2 = u1.connect("127.0.0.1", 514)
     u1.send(ipsum, 0, "127.0.0.1", 514)
   end
   it "should be able to connect to tcp port 514 and send messages" do
     t1 = TCPSocket.new('127.0.0.1', 514)
-   #  t2 = t1.connect("127.0.0.1", 514)
     t1.write(ipsum)
   end
-  # it "take 60 seconds to process the messages" do
-  #   sleep 60
-  # end
-  # it "should have data in logstashes index" do
-  #   server = Stretcher::Server.new('http://127.0.0.1:9200')
-  #   assert server.index(indice).msearch([{query: {match_all: {}}}])
-  # end
 end
