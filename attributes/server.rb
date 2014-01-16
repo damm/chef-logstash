@@ -3,11 +3,11 @@
 # Attribute:: install_server
 
 # The version of logstash to install
-default['logstash']['server']['version'] = '1.1.13'
+default['logstash']['server']['version'] = '1.3.2'
 # The url to fetch logstash from
-default['logstash']['server']['source_url'] = 'https://logstash.objects.dreamhost.com/release/logstash-1.1.13-flatjar.jar'
+default['logstash']['server']['source_url'] = 'https://download.elasticsearch.org/logstash/logstash/logstash-1.3.2-flatjar.jar'
 # sha256sum of the logstash jar
-default['logstash']['server']['checksum'] = '5ba0639ff4da064c2a4f6a04bd7006b1997a6573859d3691e210b6855e1e47f1'
+default['logstash']['server']['checksum'] = '6a6a6e55efd14a182560af8143883eace1936afb11d59d0c35ce4ed5a5576a18'
 # What installation method to use? jar is default
 default['logstash']['server']['install_method'] = 'jar' # Either `source` or `jar`
 default['logstash']['server']['patterns_dir'] = 'server/etc/patterns'
