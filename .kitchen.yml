@@ -1,17 +1,23 @@
 ---
 driver:
   name: vagrant
+  customize:
+    memory: '1024'
 
 provisioner:
   name: chef_solo
 
 platforms:
   - name: ubuntu-12.04
+    run_list:
+    - recipe[apt]
   - name: centos-6.4
+    run_list:
+    - recipe[yum]
 
 suites:
   - name: example
-    run_list:
+    run_list:  
     - recipe[minitest-handler]
     - recipe[logstash_test::example]
     attributes:
